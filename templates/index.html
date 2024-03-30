@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crop Predictor</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background-image: url('static/pp.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: rgba(80, 168, 101, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+  </style>
+</head>
+<body>
+
+  <form id="cropForm" action="{{ url_for('predict') }}" method="post">
+    <h1 style="color: rgb(5, 6, 8);">Crop Recommendation</h1>
+    <label for="n">Nitrogen Value:<a href="{{ url_for('help') }}"> help?</a></label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="n" id="n" name="n" required>
+
+    <label for="p">Phosphorus Value:<a href="{{ url_for('help') }}">help?</a></label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="p" id="p" name="p" required>
+
+    <label for="k">Potassium Value:<a href="{{ url_for('help') }}">help?</a></label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="k" id="k" name="k" required>
+
+    <label for="temperature">Temperature:</label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="temperature(in celcius)" id="temperature" name="temperature" required>
+
+    <label for="humidity">Humidity:</label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="humidity(in %)" id="humidity" name="humidity" required>
+
+    <label for="ph">pH Value:<a href="{{ url_for('help') }}">help?</a></label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="ph" id="ph" name="ph" required>
+
+    <label for="rainfall">Rainfall:</label>
+    <input type="number" inputmode="decimal" step="0.01" placeholder="rainfall(in mm)" id="rainfall" name="rainfall" required>
+    <br>
+    <hr>
+    <br>
+
+    <button type="submit" class="btn btn-primary btn-block btn-large">Recommend</button>
+  </form>
+
+{{ prediction_text }}
+
+<button onclick="enterCity()">Click here to enter city name</button>
+
+<script>
+  function enterCity() {
+    var city = prompt("Enter the city name:");
+    if (city) {
+      fetchWeatherData(city);
+    }
+  }
+  function uploadSoilImage(event) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/classify_soil', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update form fields with predicted values
+        document.getElementById("n").value = data.N;
+        document.getElementById("p").value = data.P;
+        document.getElementById("k").value = data.K;
+        document.getElementById("ph").value = data.pH;
+    })
+    .catch(error => {
+        console.error("Error uploading soil image:", error);
+        alert("Error uploading soil image. Please try again later.");
+    });
+}
+
+  function fetchWeatherData(city) {
+    // Fetch temperature and humidity data
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=5dbd96a74070fcd6d3ab24cbb6c63df3`)
+      .then(response => response.json())
+      .then(data => {
+        var forecasts = data.list;
+        var temperatureSum = 0;
+        var humiditySum = 0;
+        var count = 0;
+
+        for (var i = 0; i < forecasts.length; i++) {
+          var forecastDate = new Date(forecasts[i].dt_txt);
+          var currentDate = new Date();
+          if (forecastDate >= currentDate && count < 5) {
+            var temp = forecasts[i].main.temp;
+            var humidity = forecasts[i].main.humidity;
+            temperatureSum += (temp - 273.15); // Convert from Kelvin to Celsius
+            humiditySum += humidity;
+            count++;
+          }
+        }
+
+        var averageTemperature = temperatureSum / count;
+        var averageHumidity = humiditySum / count;
+
+        document.getElementById("temperature").value = averageTemperature.toFixed(2);
+        document.getElementById("humidity").value = averageHumidity.toFixed(2);
+      })
+      .catch(error => {
+        console.error("Error fetching weather data:", error);
+        alert("Error fetching weather data. Please try again later.");
+      });
+
+    // Fetch rainfall data
+    fetch(`/get_aar/${city}`)
+      .then(response => response.json())
+      .then(data => {
+        var avgRainfall = data.avg_rainfall;
+        document.getElementById("rainfall").value = avgRainfall;
+      })
+      .catch(error => {
+        console.error("Error fetching rainfall data:", error);
+        alert("Error fetching rainfall data. Please try again later.");
+      });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .profile-info {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .profile-info div {
+      width: 45%;
+    }
+
+    .profile-info div img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-top: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-info div p {
+      margin: 10px 0;
+    }
+
+    .profile-info div h2 {
+      margin-bottom: 20px;
+    }
+
+    .profile-info div:nth-child(odd) {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .profile-info div:nth-child(even) {
+      background-color: #f2f2f2;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Profile</h1>
+    <div class="profile-info">
+      <div>
+        <h2>{{ user[1] }}</h2>
+        <p><strong>Age:</strong> {{ user[2] }}</p>
+        <p><strong>Phone:</strong> {{ user[3] }}</p>
+        <p><strong>Address:</strong> {{ user[4] }}</p>
+        <p><strong>Land Size:</strong> {{ user[5] }} acres</p>
+        <p><strong>Email:</strong> {{ user[6] }}</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="{{ url_for('static', filename='profile.png') }}" alt="Profile Picture">
+        <!-- Add a form to upload profile picture if needed -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

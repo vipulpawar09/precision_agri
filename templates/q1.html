@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Information Form</title>
+    <script>
+        function redirectToPage(choice) {
+            if (choice === 'yes') {
+                window.location.href = "/index.html";
+            } else if (choice === 'no') {
+                window.location.href = "/value.html";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Do you know your soil's NPK content, pH, and weather parameters?</h2>
+    <form onsubmit="redirectToPage(document.querySelector('input[name=knows_soil_info]:checked').value); return false;">
+        <label for="knows_soil_info">Yes, I know my soil information:</label>
+        <input type="radio" id="knows_soil_info_yes" name="knows_soil_info" value="yes">
+        <label for="knows_soil_info_yes">Yes</label>
+        <input type="radio" id="knows_soil_info_no" name="knows_soil_info" value="no">
+        <label for="knows_soil_info_no">No</label><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

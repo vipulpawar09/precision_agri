@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crop Recommendation System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #F7F7F7;
+    }
+
+    .hero {
+      background-image: url("static/mn2.avif");
+      background-size: cover;
+      background-position: center;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #3C763D;
+      color: #FFF;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #245429;
+    }
+
+    .section {
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .section-heading {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+
+    .contact {
+      background-color: #FFF;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .contact-heading {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .contact-info {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .mission-vision {
+      background-color: #DFF0D8;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .mission-heading,
+    .vision-heading {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .mission-content,
+    .vision-content {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #666;
+    }
+
+    .contact-form {
+      margin-top: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #DDD;
+      border-radius: 5px;
+    }
+
+    .form-group textarea {
+      height: 150px;
+    }
+
+    .form-group button {
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #3C763D;
+      color: #FFF;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .form-group button:hover {
+      background-color: #245429;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Our Crop Recommendation System</h1>
+      <p>Helping Farmers Make Informed Decisions</p>
+      <a href="{{ url_for('login') }}" class="btn">Get Started</a>
+    </div>
+  </div>
+
+  <div class="section mission-vision">
+    <div class="section-heading">Our Mission</div>
+    <p class="mission-content">To empower farmers to make informed decisions about their crops, using the latest technology.
+To help farmers increase their crop yields and profits, while also reducing their environmental impact.
+To make agriculture more sustainable and resilient to climate change..</p>
+  </div>
+
+  <div class="section mission-vision">
+    <div class="section-heading">Our Vision</div>
+    <p class="vision-content">To develop a crop recommendation system that uses machine learning algorithms to provide farmers with accurate and timely information, so that they can make informed decisions about their crops and increase their crop yields and profits.</p>
+  </div>
+
+  <div class="section contact">
+    <div class="section-heading">Contact Us</div>
+    <p class="contact-info">Phone: 9822641948</p>
+    <p class="contact-info">Email: vipul.vp09@gmail.com.com</p>
+
+    <form class="contact-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit">Send Message</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
